@@ -10,9 +10,9 @@ const NavBar = () => {
             SkillSwap</div>
             <ul className='flex text-2xl justify-between gap-12 text-gray-200 font-[400]'>
                 <Link to = "/"> <li><a href="#">Home</a></li></Link>
-                <li><a href="#">Features</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="#">About us</a></li>            
+                <li><a href="#Aboutus">About us</a></li>            
               </ul>
         </nav>
     </div>

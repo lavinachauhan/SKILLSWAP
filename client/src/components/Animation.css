@@ -1,0 +1,46 @@
+/* animations.css */
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slide-in 1s ease-out forwards;
+}
+
+
+@keyframes up-down {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-15px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.up-down{
+    animation: up-down 1s ease-in-out infinite;
+}
+
+.card{
+    transition: transform 0.5s ease-in-out;
+}
+.card:hover{
+    background-color: rgba(95, 94, 94, 0.6);
+    transform: scale(1.05);
+}
+
+.button:hover{
+    background-color: rgba(204, 204, 204, 0.7);
+    transform: scale(1.05);
+    font-weight: 400;
+}

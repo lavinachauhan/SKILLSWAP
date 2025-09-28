@@ -5,6 +5,7 @@ import SignIn from './components/SignIn';
 import HomePage from './components/HomePage';
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import './components/Animation.css';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 const Appcontent = () => {
@@ -12,7 +13,7 @@ const Appcontent = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
    return(
-    <div className=  {`${isHomePage ? 'bg-[url("./bg-blue.jpg")] bg-cover h-[100vh]' : "backdrop-blur-md"} bg-cover  bg-blue-950`}>
+    <div className=  {`${isHomePage ? 'bg-[url("./bg-blue.jpg")] bg-cover h-[100%]' : "backdrop-blur-md"} bg-cover  bg-blue-950`}>
         <NavBar></NavBar>
         <Routes>
           <Route path = "/" element = {<HomePage/>}></Route>
