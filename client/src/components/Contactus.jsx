@@ -3,7 +3,7 @@ import React from "react";
 const Contactus = () => {
     return (
         <div>
-            <div className="flex flex-col items-center w-[70%] mt-[10rem] gap-7 mx-auto">
+            <div className="flex flex-col items-center w-[70%] mt-[10rem] gap-7 mx-auto " id = "ContactUs">
                 <h1 className='text-4xl font-extrabold text-white'>Contact Us</h1>
                 <div className="bg-gray-700/80  rounded-3xl w-full flex  h-[25rem] ">
                     {/* left part form */}
@@ -25,9 +25,9 @@ const Contactus = () => {
                         </div>
 
                         <div className="flex gap-4">
-                            <a href="#"><img src="./instagram.svg" alt="insta" className="bg-white h-9" /></a>
-                            <a href= "#"><img src="./linkedin.svg" alt="linkedin" className="bg-white h-9"/></a>
-                            <a href="#"><img src="./twitter.svg" alt="twitter" className="bg-white h-9"/></a>
+                            <a href="#"><img src="./instagram.svg" alt="insta" className="bg-white h-9 rounded-2xl" /></a>
+                            <a href= "#"><img src="./linkedin.svg" alt="linkedin" className="bg-white h-9 rounded-2xl"/></a>
+                            <a href="#"><img src="./twitter.svg" alt="twitter" className="bg-white h-9 rounded-2xl"/></a>
                         </div>
                     </div>
                 </div>

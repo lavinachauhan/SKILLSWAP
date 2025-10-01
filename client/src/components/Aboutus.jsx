@@ -3,7 +3,7 @@ import React from 'react'
 const Aboutus = () => {
   return (
     <div>
-        <div className = "flex flex-col items-center gap-10  mx-auto mt-[10rem]" id = "Aboutus">
+        <div className = "flex flex-col items-center gap-10  mx-auto mt-[10rem]" id = "AboutUs">
               <h1 className='mx-auto text-4xl font-extrabold text-white'>About SkillSwap</h1>
             <p className='text-white font-medium text-2xl bg-gray-700/80 w-[50rem] p-[5rem] rounded-3xl card'>
                 Skillswap was created with one simple idea: everyone has something to teach, and everyone has something to learn.

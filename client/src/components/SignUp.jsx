@@ -5,8 +5,13 @@ const SignUp = () => {
   return (
     <div className>
         <div className='quicksand bg-[url("./bg-blue.jpg")] flex flex-col justify-center items-center gap-12 h-[30rem] w-[20rem] m-auto mt-6 bg-cover'>
-            <div>
-                    <h1 className='text-[2rem] text-white font-[700]'>Create Account</h1>
+            <div className = "w-full p-4 flex flex-col">
+                    <Link to='/'><div className='text-white'>
+                                    <img src="./backbtn.png" alt="backbtn" className='text-white h-[1rem]' />
+                                    <span>Back</span>
+                                </div>
+                    </Link>
+                    <h1 className='text-[1.5rem] text-white font-[700] mx-auto'>Create Account</h1>
             </div>
             <div className='flex flex-col gap-3'>
                 <input type="text" placeholder = "Full name" className='h-[2.5rem] w-[15rem] p-6 rounded-3xl bg-gray-300 focus:outline-none'/>

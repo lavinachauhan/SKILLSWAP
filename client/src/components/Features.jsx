@@ -4,7 +4,7 @@ const Features = () => {
   return (
     <div>
        {/* features section */}
-        <div className='flex flex-col gap-20 features' id = "features">
+        <div className='flex flex-col gap-20 features' id = "Features">
               {/* heading */} 
               <h1 className='mx-auto text-4xl font-extrabold text-white'>Why Choose SkillSwap</h1>
 

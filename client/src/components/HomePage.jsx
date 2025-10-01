@@ -3,11 +3,19 @@ import { Link } from "react-router-dom";
 import Features from './Features';
 import Aboutus from './Aboutus';
 import Contactus from './Contactus';
+import NavBar from './NavBar';
 
 const HomePage = () => {
+  const homeLinks = [
+    {path : "/", label : "Home", type: "link"},
+    {path : "#Features", label : "Features", type : "anchor"},
+    {path : "#ContactUs", label : "Contact", type : "anchor"},
+    {path : "#AboutUs", label : "About Us", type : "anchor"}]
   return (
     // bg-[url("./bg-blue.jpg")]
     <div>
+      <NavBar links = {homeLinks}/>
+
       <div className='quicksand bg-cover bg-center h-full max-w-[1280px] mx-auto p-6'>
   
         {/* hero section */}
