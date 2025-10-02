@@ -13,8 +13,10 @@ const Appcontent = () => {
 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const isDashBoard = location.pathname === '/Dashboard';
+  const both = isHomePage || isDashBoard;
    return(
-    <div className=  {`${isHomePage ? 'bg-[url("./bg-blue.jpg")] bg-cover h-[100%]' : "backdrop-blur-md"} bg-cover  bg-blue-950`}>
+    <div className=  {`${both ? 'bg-[url("./bg-blue.jpg")] bg-cover h-[100%]' : "backdrop-blur-md bg-cover h-[100%] overflow-y-hidden flex flex-col items-center justify-between  bg-blue-950"} `}>
         <Routes>
           <Route path = "/" element = {<HomePage/>}></Route>
           <Route path = "/SignIn" element = {<SignIn/>}></Route>

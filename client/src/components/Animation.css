@@ -53,7 +53,7 @@
 
 @keyframes typing {
     0%{
-          width : 0;
+        width : 0;
     }
     50%{
         width: 100%;
@@ -67,4 +67,9 @@
     animation:
       typing 6s steps(13, end) infinite forwards,
       cursor .6s infinite alternate;
+}
+
+.quicklinks:hover{
+  border: 2px solid white;
+  transform: scale(1.1);
 }
