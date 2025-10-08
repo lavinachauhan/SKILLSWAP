@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
   return (
     <div className>
-        <div className='quicksand bg-[url("./bg-blue.jpg")] flex flex-col justify-around items-center gap-12 h-[60rem] w-[40rem] m-auto mt-[15rem] bg-cover'>
+        <div className='quicksand bg-[url("./bg-blue.jpg")] flex flex-col gap-10 items-center h-[35rem] w-[25rem] m-auto mt-[15rem] bg-cover'>
             <div className = "w-full p-4 flex flex-col">
                     <Link to='/'><div className='text-white'>
                                     <img src="./backbtn.png" alt="backbtn" className='text-white h-[1rem]' />
