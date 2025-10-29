@@ -55,8 +55,8 @@
     0%{
         width : 0;
     }
-    50%{
-        width: 100%;
+    100%{
+          width: var(--charCount);
     }
 }
 .text{
@@ -64,8 +64,11 @@
     width : 0;
     white-space: nowrap;
     overflow: hidden;
-    animation:
+    /* animation:
       typing 6s steps(13, end) infinite forwards,
+      cursor .6s infinite alternate; */
+      animation: 
+      typing 3s steps(var(--charCount), end) infinite forwards, 
       cursor .6s infinite alternate;
 }
 

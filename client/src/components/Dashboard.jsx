@@ -1,6 +1,8 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import NavBar from "./NavBar";
+import axios from "axios";
+import {useEffect, useState} from 'react';
 
 const Dashboard = () => {
     const dashLinks = [
@@ -8,13 +10,65 @@ const Dashboard = () => {
     {path : "/skills", label : "Browse Skills"},
     {path : "/Message", label : "Messages"},
     {path : "/profile", label : "Profile"},
-    {path : "/", label : "Logout"}]
+    {path : "/SignIn", label : "Logout"}]
+
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState('');
+
+    const token = JSON.parse(localStorage.getItem('token'))
+
+    useEffect(()=> {
+    const fetchData = async () => {
+        setLoading(true);
+        const header = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    axios.post('http://localhost:8080/user/profile', {}, header)
+    .then((res) => {
+        setLoading(false)
+        setData(res.data.data)
+        console.log("User data fetched", res.data.data);
+    })
+    .catch((err) => {
+        setLoading(false)
+        console.log("Error while fetch data", err)
+        setLoading(false);
+    })
+};
+
+    if(token){
+        fetchData();
+    } else{
+        console.log("No token found in localStorage");
+    }
+}, [token]);
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      localStorage.removeItem("token");
+      navigate("/SignIn"); // redirect to login
+    }
+  };
+
+
     return (
         <div className='quicksand text-white'>
-             <NavBar links = {dashLinks}/>
-            <div className="text-white flex flex-col items-center mt-18 mx-auto h-[10rem] w-fit  gap-10">
+
+            <NavBar
+                links={dashLinks.map((link) =>
+                link.label === "Logout"
+                ? { ...link, onClick: handleLogout }
+                : link
+            )}
+        />
+
+
+            <div className="text-white flex flex-col items-center mt-18 mx-auto h-[10rem] w-fit  gap-10" style={{ "--charCount": data?.name?.length || 10 }}>
                     {/* Welcome banner */}
-                    <h1 className="text-5xl font-extrabold text">Hi, Username!</h1>
+                    <h1 className="text-5xl font-extrabold text">Hi, {data?.name || "Username"}</h1>
                     <p className="text-2xl font-medium">Welcome back to SkillSwap</p>
             </div>
 
@@ -89,8 +143,6 @@ const Dashboard = () => {
                 <li>Aarav gave you a 5-star review for Web Development.</li>
             </ul>
         </div>
-
-
 
             {/* Suggested Connection */}
             <div className = 'flex flex-col items-center  gap-12 p-4 rounded-4xl w-[700px] mx-auto mt-[15rem] bg-gray-500/80'>

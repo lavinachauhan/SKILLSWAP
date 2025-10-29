@@ -8,6 +8,9 @@ import Footer from './components/Footer'
 import './components/Animation.css';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from './components/Dashboard';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 const Appcontent = () => {
 
@@ -17,11 +20,14 @@ const Appcontent = () => {
   const both = isHomePage || isDashBoard;
    return(
     <div className=  {`${both ? 'bg-[url("./bg-blue.jpg")] bg-cover h-[100%]' : "backdrop-blur-md bg-cover h-[100%] overflow-y-hidden flex flex-col items-center justify-between  bg-blue-950"} `}>
+
         <Routes>
+          <Route element = {<ProtectedRoutes/>}>
+              <Route path = "/Dashboard" element = {<Dashboard/>}></Route>
+          </Route>
           <Route path = "/" element = {<HomePage/>}></Route>
           <Route path = "/SignIn" element = {<SignIn/>}></Route>
           <Route path = "/Signup" element = {<SignUp/>}></Route>
-          <Route path = "/Dashboard" element = {<Dashboard/>}></Route>
       </Routes>
       <Footer></Footer>
 
@@ -33,7 +39,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Appcontent/>
+      <ToastContainer position="top-center" autoClose={2000} />
     </BrowserRouter>
+    
   )
 }
 
