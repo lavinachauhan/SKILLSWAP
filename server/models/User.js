@@ -13,6 +13,18 @@ const UserSchema = new Schema({
     password : {
         type: String,
         required: true
+    },
+    teachSkills: {
+        type: [String],
+        default: []
+    },
+    learnSkills: {
+        type: [String],
+        default: []
+    },
+    about :{
+            type: String,
+            default : ""
     }
 })
 

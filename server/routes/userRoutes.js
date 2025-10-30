@@ -44,8 +44,8 @@ router.post("/SignIn", async (req, res) => {
     }
 }) 
 
-// Profile
-router.post("/profile", async (req, res) => {
+// dashboard
+router.post("/Dashboard", async (req, res) => {
     try{
         const token = req.headers?.authorization?.split(' ')[1];
         if(!token) return res.status(400).json({ status: false, message: "Access Denied"});
@@ -64,4 +64,107 @@ router.post("/profile", async (req, res) => {
         return res.status(400).json({status: false, message: "Something went wrong", error: error.message})
     }
 }) 
+
+// Get Profile Details
+router.get("/profile/:id", async (req, res) => {
+  try {
+    const token = req.headers?.authorization?.split(' ')[1];
+    if (!token)
+      return res.status(400).json({ status: false, message: "Access Denied" });
+
+    jwt.verify(token, secretKey, async (err, decode) => {
+      if (err)
+        return res.status(400).json({ status: false, message: "Invalid Token" });
+
+      // Use req.params.id instead of decode.id
+      const userId = req.params.id || decode.id;
+
+      const user = await User.findById(userId).select("-password");
+      if (!user)
+        return res.status(404).json({ status: false, message: "User not found" });
+
+      res.status(200).json({
+        status: true,
+        message: "Profile Data fetched successfully",
+        data: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          teachSkills: user.teachSkills || [],
+          learnSkills: user.learnSkills || [],
+          about: user.about || ""
+        },
+      });
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+});
+
+
+// Get Profile Details
+// router.get("/profile/:id", async (req, res) => {
+//   try {
+//     const token = req.headers?.authorization?.split(' ')[1];
+//     if (!token)
+//       return res.status(400).json({ status: false, message: "Access Denied" });
+
+//     jwt.verify(token, secretKey, async (err, decode) => {
+//       if (err)
+//         return res.status(400).json({ status: false, message: "Invalid Token" });
+
+//       const user = await User.findById(decode.id).select("-password"); // exclude password
+//       if (!user)
+//         return res.status(404).json({ status: false, message: "User not found" });
+
+//         const userData = {
+//             id: user._id,
+//             name: user.name,
+//             email: user.email,
+//             teachSkills: user.teachSkills || [],
+//             learnSkills: user.learnSkills || [],
+//             about: user.about || ""
+//         };
+
+//       res.status(200).json({ status: true, message: "Profile Data", data: userData });
+//     });
+//   } catch (error) {
+//     return res
+//       .status(400)
+//       .json({ status: false, message: "Something went wrong", error: error.message });
+//   }
+// });
+
+
+// update profile route
+router.put("/profileupdate", async(req, res) => {
+    const {teachSkills, learnSkills, about} = req.body;
+    try{
+        const token = req.headers?.authorization?.split(" ")[1];
+        if(!token) return res.status(400).json({status : false, message : "Access Denied"});
+
+        jwt.verify(token, secretKey, async(err, decode) => {
+            if(err) return res.status(400).json({ message: "Invalid Token" });
+
+            const updatedUser = await User.findByIdAndUpdate(
+                decode.id, 
+                {teachSkills, learnSkills, about}, 
+                {new : true});
+
+                res.status(200).json({ status : true, 
+                    message : "Profile updated successfully",
+                    data : updatedUser});
+        });
+    }
+    catch(error){
+            return res.status(400).json({status : false,
+                message : "Something went wrong", 
+                error : error.message});
+    }
+});
+
 module.exports = router;
