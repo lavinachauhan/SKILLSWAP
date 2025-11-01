@@ -77,23 +77,24 @@ router.get("/profile/:id", async (req, res) => {
         return res.status(400).json({ status: false, message: "Invalid Token" });
 
       // Use req.params.id instead of decode.id
-      const userId = req.params.id || decode.id;
+      const userId = req.params.id;
 
       const user = await User.findById(userId).select("-password");
       if (!user)
         return res.status(404).json({ status: false, message: "User not found" });
 
-      res.status(200).json({
-        status: true,
-        message: "Profile Data fetched successfully",
-        data: {
+      const data = {  
           id: user._id,
           name: user.name,
           email: user.email,
           teachSkills: user.teachSkills || [],
           learnSkills: user.learnSkills || [],
-          about: user.about || ""
-        },
+          about: user.about || ""}
+
+      res.status(200).json({
+        status: true,
+        message: "Profile Data fetched successfully",
+        data
       });
     });
   } catch (error) {
