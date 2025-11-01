@@ -1,16 +1,17 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import NavBar from "./NavBar";
 import axios from "axios";
 import {useEffect, useState} from 'react';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const dashLinks = [
-    {path : "/LogInHome", label : "Home"},
+    {path : "/", label : "Home"},
     {path : "/skills", label : "Browse Skills"},
     {path : "/Message", label : "Messages"},
     {path : "/profile", label : "Profile"},
-    {path : "/SignIn", label : "Logout"}]
+    {label : "Logout"}];
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState('');
@@ -25,11 +26,12 @@ const Dashboard = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-    axios.post('http://localhost:8080/user/profile', {}, header)
+    axios.post('http://localhost:8080/user/Dashboard', {}, header)
     .then((res) => {
         setLoading(false)
         setData(res.data.data)
         console.log("User data fetched", res.data.data);
+        localStorage.setItem("userId",res.data.data.id);
     })
     .catch((err) => {
         setLoading(false)
@@ -49,7 +51,7 @@ const Dashboard = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (confirmLogout) {
       localStorage.removeItem("token");
-      navigate("/SignIn"); // redirect to login
+      navigate("/"); // redirect to login
     }
   };
 
@@ -63,7 +65,7 @@ const Dashboard = () => {
                 ? { ...link, onClick: handleLogout }
                 : link
             )}
-        />
+        />  
 
 
             <div className="text-white flex flex-col items-center mt-18 mx-auto h-[10rem] w-fit  gap-10" style={{ "--charCount": data?.name?.length || 10 }}>
@@ -75,7 +77,7 @@ const Dashboard = () => {
              {/* Quick Links */}
             <div className = 'grid grid-cols-2 grid-rows-4 gap-10 p-6 rounded-3xl h-[100rem] w-[1080px] mx-auto mt-[15rem] bg-gray-500/80'>
                 {/* Profile */}
-                <a href="#">
+                <Link to="/profile">
                     <div className = 'border-transparent rounded-3xl h-[22rem] flex flex-col items-center justify-center gap-6 quicklinks'>
                         <img src="./profile.png" alt="" className = "h-28 w-28"/>
                         <h3 className="font-bold text-4xl">Profile</h3>
@@ -83,7 +85,7 @@ const Dashboard = () => {
                             personal details and skill preferences
                         </p>
                     </div>
-                </a>
+                </Link>
                 
 
                <div>
@@ -103,7 +105,7 @@ const Dashboard = () => {
                     </div>
                 </a>
                 {/* Browse Skills */}
-                 <a href="#">
+                 <Link to="/skills">
                     <div className = 'border-transparent  rounded-3xl h-[22rem] flex flex-col items-center justify-center gap-6 quicklinks'>
                         <img src="./search.png" alt="" className = "h-28 w-28"/>
                         <h3 className="font-bold text-4xl">Browse Skills</h3>
@@ -111,7 +113,7 @@ const Dashboard = () => {
                             and find the skills you want to learn
                         </p>
                     </div>
-                </a>
+                </Link>
 
                  <div>
 

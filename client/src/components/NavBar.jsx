@@ -14,7 +14,9 @@ const NavBar = ({links}) => {
               {links.map((link) => (
 
                     <li key = {link.label}>
-                      {link.type === "anchor" ? (
+                        {link.onClick ? (
+                        <button onClick={link.onClick}>{link.label}</button>
+                        ) : link.type === "anchor" ? (
                          <HashLink smooth to={link.path}>{link.label}</HashLink>
                              ) : (
                                   <Link to={link.path}>{link.label}</Link>

@@ -11,6 +11,8 @@ import Dashboard from './components/Dashboard';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import Profile from './components/Profile';
+import BrowseSkills from './components/BrowseSkills';
 
 const Appcontent = () => {
 
@@ -24,10 +26,13 @@ const Appcontent = () => {
         <Routes>
           <Route element = {<ProtectedRoutes/>}>
               <Route path = "/Dashboard" element = {<Dashboard/>}></Route>
+              <Route path = "/profile" element = {<Profile/>}></Route>
           </Route>
           <Route path = "/" element = {<HomePage/>}></Route>
           <Route path = "/SignIn" element = {<SignIn/>}></Route>
           <Route path = "/Signup" element = {<SignUp/>}></Route>
+          <Route path = "/skills" element = {<BrowseSkills/>}></Route>
+
       </Routes>
       <Footer></Footer>
 
