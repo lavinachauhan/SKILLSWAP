@@ -204,6 +204,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");  // ✅ middleware import
 const secretKey = process.env.secretKey;
+const Activity = require("../models/Activity");
+
 
 // =============================
 //  REGISTER
@@ -362,6 +364,20 @@ router.post("/send-request/:receiverId", auth, async (req, res) => {
     await sender.save();
     await receiver.save();
 
+    // ✅ Add activity logs
+    await Activity.create({
+      user: receiver._id,
+      type: "request_received",
+      message: `${sender.name} sent you a connection request`,
+      from: sender._id
+    });
+
+    await Activity.create({
+      user: sender._id,
+      type: "request_sent",
+      message: `You sent a connection request to ${receiver.name}`,
+      from: receiver._id
+  });
     res.status(200).json({ message: "Friend request sent successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error sending request", error: error.message });
@@ -396,6 +412,23 @@ router.post("/accept-request/:senderId", auth, async (req, res) => {
     await sender.save();
     await receiver.save();
 
+
+      // ✅ Add activity logs
+    await Activity.create({
+      user: sender._id,
+      type: "request_accepted",
+      message: `${receiver.name} accepted your connection request`,
+      from: receiver._id
+    });
+
+    await Activity.create({
+      user: receiver._id,
+      type: "request_accepted",
+      message: `You accepted ${sender.name}'s connection request`,
+      from: sender._id
+    });
+
+
     res.status(200).json({ message: "Friend request accepted" });
   } catch (error) {
     res.status(500).json({ message: "Error accepting request", error: error.message });
@@ -428,6 +461,19 @@ router.get("/friends", auth, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Error fetching friends", error: error.message });
+  }
+});
+
+// Activity route
+router.get("/activities", auth, async (req, res) => {
+  try {
+    const activities = await Activity.find({ user: req.userId })
+      .populate("from", "name email")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ status: true, activities });
+  } catch (error) {
+    res.status(500).json({ status: false, message: "Error fetching activities", error: error.message });
   }
 });
 
