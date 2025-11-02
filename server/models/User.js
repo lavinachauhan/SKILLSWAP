@@ -25,7 +25,39 @@ const UserSchema = new Schema({
     about :{
             type: String,
             default : ""
-    }
+    },
+    requestsSent: [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User'}],
+    requestsReceived: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'}],
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'User'
+    }],
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'User'
+    }],
+    activities: [{
+        type : {
+            type : String,
+            default: 'info'
+        },
+        message : {
+               type: String,
+        },
+        from: {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'User',
+            default : null
+        },
+        createdAt: {
+            type : Date,
+            default: Date.now
+        }
+    }]
 })
 
 module.exports = mongoose.model("User", UserSchema);  
