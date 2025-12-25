@@ -39,24 +39,6 @@ const UserSchema = new Schema({
     following: [{
         type: mongoose.Schema.Types.ObjectId,
         ref : 'User'
-    }],
-    activities: [{
-        type : {
-            type : String,
-            default: 'info'
-        },
-        message : {
-               type: String,
-        },
-        from: {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'User',
-            default : null
-        },
-        createdAt: {
-            type : Date,
-            default: Date.now
-        }
     }]
 })
 

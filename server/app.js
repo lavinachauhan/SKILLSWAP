@@ -1,40 +1,40 @@
-const express = require('express');
-const app = express();
+const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
-const userRoute = require("./routes/userRoutes");
+const dotenv = require('dotenv');
+const {app, server} = require("./socket");
+dotenv.config();
+
+const userRoutes = require("./routes/userRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+
 
 app.use(express.json());
 app.use(cors({
-    origin: true,
+    origin: "http://localhost:5173",
     credentials: true
-}))
+}));
 
 const MONGO_URL = process.env.MONGO_URL;
-// Database connection
+
 main()
-.then(() => {
-    console.log("Mongo DB Connection Successful");
-})
-.catch((err) => {
-    console.log("Failed to connect database ", err);
-}) 
- 
-async function main(){
+    .then(() => console.log("MongoDB Connection Successful"))
+    .catch((err) => console.log("Database connection failed: ", err));
+
+async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
-// Home route
+
 app.get("/", (req, res) => {
-    res.send("Hi I am root");
-})
+    res.send("Hi, I am root route!");
+});
 
-app.use("/user", userRoute);
+app.use("/user", userRoutes);
+app.use("/message", messageRoutes);
 
+const PORT = 8080;
+server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
 
-
-// Server Start
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
-})
